@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elia & Shaï — Dashboard RSVP</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="dashboard-header">
+    <div class="container-fluid px-4">
+      <div class="d-flex align-items-center justify-content-between py-3">
+        <div>
+          <h1 class="header-title">Elia <span class="header-amp">&</span> Shaï</h1>
+          <p class="header-sub">Dashboard RSVP — 29 juillet 2026</p>
+        </div>
+        <div class="d-flex align-items-center gap-3">
+          <span class="last-update" id="lastUpdate">—</span>
+          <button class="btn-refresh" id="btnRefresh" title="Rafraîchir les données">
+            <i class="bi bi-arrow-clockwise" id="refreshIcon"></i>
+            <span>Rafraîchir</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-fluid px-4 py-4">
+
+    <!-- ÉTAT DE CHARGEMENT / ERREUR -->
+    <div id="stateLoading" class="state-block">
+      <div class="spinner-ring"></div>
+      <p>Chargement des réponses…</p>
+    </div>
+    <div id="stateError" class="state-block d-none">
+      <i class="bi bi-exclamation-circle state-icon text-danger"></i>
+      <p id="errorMsg">Impossible de charger les données.</p>
+      <button class="btn-refresh mt-2" onclick="loadData()">Réessayer</button>
+    </div>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div id="mainContent" class="d-none">
+
+      <!-- TOTAUX GLOBAUX -->
+      <div class="section-label">Vue d'ensemble</div>
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+          <div class="stat-card stat-total">
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Réponses reçues</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card stat-mairie">
+            <div class="stat-event-name">Mairie & Henné</div>
+            <div class="stat-value" id="statMairie">0</div>
+            <div class="stat-label">personnes présentes</div>
+            <div class="stat-absent" id="statMairieAbsent"></div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card stat-cocktail">
+            <div class="stat-event-name">Houppa & Soirée</div>
+            <div class="stat-value" id="statCocktail">0</div>
+            <div class="stat-label">personnes présentes</div>
+            <div class="stat-absent" id="statCocktailAbsent"></div>
+          </div>
+        </div>
+        <div class="col-6 col-md-3">
+          <div class="stat-card stat-chabat">
+            <div class="stat-event-name">Chabat</div>
+            <div class="stat-value" id="statChabat">0</div>
+            <div class="stat-label">personnes présentes</div>
+            <div class="stat-absent" id="statChabatAbsent"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FILTRES & RECHERCHE -->
+      <div class="section-label">Réponses</div>
+      <div class="filters-bar mb-3">
+        <div class="search-wrap">
+          <i class="bi bi-search search-icon"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un nom, email…">
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Niveau :</span>
+          <button class="filter-btn active" data-filter="level" data-value="all">Tous</button>
+          <button class="filter-btn" data-filter="level" data-value="latotale">La totale</button>
+          <button class="filter-btn" data-filter="level" data-value="classico">Classico</button>
+          <button class="filter-btn" data-filter="level" data-value="labase">La base</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label">Présence :</span>
+          <button class="filter-btn active" data-filter="event" data-value="all">Tous</button>
+          <button class="filter-btn" data-filter="event" data-value="mairie">Mairie</button>
+          <button class="filter-btn" data-filter="event" data-value="cocktail">Houppa</button>
+          <button class="filter-btn" data-filter="event" data-value="chabat">Chabat</button>
+        </div>
+        <div class="results-count ms-auto" id="resultsCount"></div>
+      </div>
+
+      <!-- TABLE -->
+      <div class="table-wrap">
+        <table class="rsvp-table" id="rsvpTable">
+          <thead>
+            <tr>
+              <th class="col-date sortable" data-col="date">Date <i class="bi bi-chevron-expand sort-icon"></i></th>
+              <th class="col-nom sortable" data-col="nom">Nom <i class="bi bi-chevron-expand sort-icon"></i></th>
+              <th class="col-contact">Contact</th>
+              <th class="col-level">Niveau</th>
+              <th class="col-event text-center">Mairie & Henné</th>
+              <th class="col-event text-center">Houppa & Soirée</th>
+              <th class="col-event text-center">Chabat</th>
+              <th class="col-msg">Message</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+          </tbody>
+        </table>
+        <div id="emptyState" class="empty-state d-none">
+          <i class="bi bi-search"></i>
+          <p>Aucune réponse ne correspond à votre recherche.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>
