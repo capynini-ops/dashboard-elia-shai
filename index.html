@@ -14,7 +14,6 @@
 </head>
 <body>
 
-  <!-- HEADER -->
   <header class="dashboard-header">
     <div class="container-fluid px-4">
       <div class="d-flex align-items-center justify-content-between py-3">
@@ -35,7 +34,6 @@
 
   <main class="container-fluid px-4 py-4">
 
-    <!-- ÉTAT DE CHARGEMENT / ERREUR -->
     <div id="stateLoading" class="state-block">
       <div class="spinner-ring"></div>
       <p>Chargement des réponses…</p>
@@ -46,50 +44,23 @@
       <button class="btn-refresh mt-2" onclick="loadData()">Réessayer</button>
     </div>
 
-    <!-- CONTENU PRINCIPAL -->
     <div id="mainContent" class="d-none">
 
-      <!-- TOTAUX GLOBAUX -->
-      <div class="section-label">Vue d'ensemble</div>
-      <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-          <div class="stat-card stat-total">
-            <div class="stat-value" id="statTotal">0</div>
-            <div class="stat-label">Réponses reçues</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-card stat-mairie">
-            <div class="stat-event-name">Mairie & Henné</div>
-            <div class="stat-value" id="statMairie">0</div>
-            <div class="stat-label">personnes présentes</div>
-            <div class="stat-absent" id="statMairieAbsent"></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-card stat-cocktail">
-            <div class="stat-event-name">Houppa & Soirée</div>
-            <div class="stat-value" id="statCocktail">0</div>
-            <div class="stat-label">personnes présentes</div>
-            <div class="stat-absent" id="statCocktailAbsent"></div>
-          </div>
-        </div>
-        <div class="col-6 col-md-3">
-          <div class="stat-card stat-chabat">
-            <div class="stat-event-name">Chabat</div>
-            <div class="stat-value" id="statChabat">0</div>
-            <div class="stat-label">personnes présentes</div>
-            <div class="stat-absent" id="statChabatAbsent"></div>
-          </div>
-        </div>
+      <div class="stats-simple mb-4">
+        <span class="stat-simple-item"><span class="stat-simple-label">Réponses reçues :</span> <span class="stat-simple-value" id="statTotal">0</span></span>
+        <span class="stat-simple-sep">·</span>
+        <span class="stat-simple-item"><span class="stat-simple-label">Mairie &amp; Henné :</span> <span class="stat-simple-value" id="statMairie">0</span></span>
+        <span class="stat-simple-sep">·</span>
+        <span class="stat-simple-item"><span class="stat-simple-label">Houppa &amp; Soirée :</span> <span class="stat-simple-value" id="statCocktail">0</span></span>
+        <span class="stat-simple-sep">·</span>
+        <span class="stat-simple-item"><span class="stat-simple-label">Chabat :</span> <span class="stat-simple-value" id="statChabat">0</span></span>
       </div>
 
-      <!-- FILTRES & RECHERCHE -->
       <div class="section-label">Réponses</div>
       <div class="filters-bar mb-3">
         <div class="search-wrap">
           <i class="bi bi-search search-icon"></i>
-          <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un nom, email…">
+          <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un nom…">
         </div>
         <div class="filter-group">
           <span class="filter-label">Niveau :</span>
@@ -108,23 +79,19 @@
         <div class="results-count ms-auto" id="resultsCount"></div>
       </div>
 
-      <!-- TABLE -->
       <div class="table-wrap">
         <table class="rsvp-table" id="rsvpTable">
           <thead>
             <tr>
-              <th class="col-date sortable" data-col="date">Date <i class="bi bi-chevron-expand sort-icon"></i></th>
               <th class="col-nom sortable" data-col="nom">Nom <i class="bi bi-chevron-expand sort-icon"></i></th>
-              <th class="col-contact">Contact</th>
               <th class="col-level">Niveau</th>
-              <th class="col-event text-center">Mairie & Henné</th>
-              <th class="col-event text-center">Houppa & Soirée</th>
+              <th class="col-event text-center">Mairie &amp; Henné</th>
+              <th class="col-event text-center">Houppa &amp; Soirée</th>
               <th class="col-event text-center">Chabat</th>
               <th class="col-msg">Message</th>
             </tr>
           </thead>
-          <tbody id="tableBody">
-          </tbody>
+          <tbody id="tableBody"></tbody>
         </table>
         <div id="emptyState" class="empty-state d-none">
           <i class="bi bi-search"></i>

@@ -103,12 +103,7 @@
     const mairieInvited = allData.filter(r => r.presenceMairie !== 'Non invité').length;
     const chabatInvited = allData.filter(r => r.presenceChabat !== 'Non invité').length;
 
-    document.getElementById('statMairieAbsent').textContent =
-      absMairie > 0 ? absMairie + ' absent' + (absMairie > 1 ? 's' : '') + ' · ' + mairieInvited + ' invités' : mairieInvited + ' invités';
-    document.getElementById('statCocktailAbsent').textContent =
-      absCocktail > 0 ? absCocktail + ' absent' + (absCocktail > 1 ? 's' : '') : '';
-    document.getElementById('statChabatAbsent').textContent =
-      absChabat > 0 ? absChabat + ' absent' + (absChabat > 1 ? 's' : '') + ' · ' + chabatInvited + ' invités' : chabatInvited + ' invités';
+
   }
 
   // ── FILTERS ──────────────────────────────────────────────
@@ -187,12 +182,7 @@
     filteredData.forEach(row => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td class="td-date">${formatDate(row.date)}</td>
         <td class="td-nom">${esc(row.nom)}</td>
-        <td class="td-contact">
-          ${row.email ? `<a href="mailto:${esc(row.email)}">${esc(row.email)}</a><br>` : ''}
-          ${row.telephone ? esc(row.telephone) : '<span style="color:var(--border)">—</span>'}
-        </td>
         <td>${badgeLevel(row.inviteLevel)}</td>
         <td class="td-event">${eventCell(row.presenceMairie, row.nbMairie)}</td>
         <td class="td-event">${eventCell(row.presenceCocktail, row.nbCocktail)}</td>

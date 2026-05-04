@@ -133,62 +133,44 @@ body {
   margin-bottom: 10px;
 }
 
-/* ---- STAT CARDS ---- */
-.stat-card {
+/* ---- STATS SIMPLES ---- */
+.stats-simple {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 18px 20px;
+  padding: 14px 20px;
   box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
 }
 
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 4px;
-  height: 100%;
+.stat-simple-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
 }
 
-.stat-total::before  { background: var(--total-color); }
-.stat-mairie::before { background: var(--mairie-color); }
-.stat-cocktail::before { background: var(--cocktail-color); }
-.stat-chabat::before { background: var(--chabat-color); }
-
-.stat-event-name {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--ink-light);
-  margin-bottom: 4px;
+.stat-simple-label {
+  font-size: 12px;
+  color: var(--ink-mid);
+  font-weight: 500;
+  letter-spacing: .03em;
 }
 
-.stat-value {
+.stat-simple-value {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 2.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
+  color: var(--violet-dark);
   line-height: 1;
-  color: var(--ink);
 }
 
-.stat-total .stat-value { color: var(--total-color); }
-.stat-mairie .stat-value { color: var(--mairie-color); }
-.stat-cocktail .stat-value { color: var(--cocktail-color); }
-.stat-chabat .stat-value { color: var(--chabat-color); }
-
-.stat-label {
-  font-size: 11px;
-  color: var(--ink-light);
-  margin-top: 2px;
-}
-
-.stat-absent {
-  font-size: 11px;
-  color: var(--ink-light);
-  margin-top: 4px;
+.stat-simple-sep {
+  color: var(--border);
+  font-size: 16px;
+  line-height: 1;
 }
 
 /* ---- FILTERS BAR ---- */
